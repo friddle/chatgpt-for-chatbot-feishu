@@ -136,9 +136,11 @@ func CreateMessageCommand(
 				defer answerTimeout.Stop()
 
 				conversation, err := chatgptClient.GetOrCreateConversation(request.ChatID(), &chatgpt.ConversationConfig{
-					MaxMessages: 50,
-					Model:       cfg.OpenAIModel,
-					Temperature: cfg.OpenAITemperature,
+					MaxMessages:       50,
+					Model:             cfg.OpenAIModel,
+					Temperature:       cfg.OpenAITemperature,
+					MaxRequestTokens:  250,
+					MaxResponseTokens: 250,
 				})
 				if err != nil {
 					logger.Errorf("failed to get or create conversation by ChatID %s", request.ChatID())
@@ -153,8 +155,9 @@ func CreateMessageCommand(
 				var answer []byte
 				err = retry.Retry(func() error {
 					answer, err = conversation.Ask([]byte(question), &chatgpt.ConversationAskConfig{
-						ID:   request.Event.Message.MessageID,
-						User: user.User.Name,
+						ID:          request.Event.Message.MessageID,
+						User:        user.User.Name,
+						Temperature: cfg.OpenAITemperature,
 					})
 					if err != nil {
 						logger.Errorf("failed to request answer: %v", err)

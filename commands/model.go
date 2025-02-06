@@ -24,8 +24,10 @@ func CreateModelCommand(
 
 			if len(args) == 0 || args[0] == "" {
 				currentModel, err := chatgptClient.GetConversationModel(request.ChatID(), &chatgpt.ConversationConfig{
-					MaxMessages: 100,
-					Model:       cfg.OpenAIModel,
+					MaxMessages:      250,
+					Model:            cfg.OpenAIModel,
+					Temperature:      cfg.OpenAITemperature,
+					MaxRequestTokens: 250,
 				})
 				if err != nil {
 					return fmt.Errorf("failed to get model by conversation(%s)", request.ChatID())
@@ -44,8 +46,11 @@ func CreateModelCommand(
 			}
 
 			if err := chatgptClient.ChangeConversationModel(request.ChatID(), model, &chatgpt.ConversationConfig{
-				MaxMessages: 50,
-				Model:       cfg.OpenAIModel,
+				MaxMessages:       50,
+				Model:             cfg.OpenAIModel,
+				Temperature:       cfg.OpenAITemperature,
+				MaxRequestTokens:  250,
+				MaxResponseTokens: 1024,
 			}); err != nil {
 				return fmt.Errorf("failed to set model(%s) for conversation(%s)", model, request.ChatID())
 			}
