@@ -17,7 +17,8 @@ RUN CGO_ENABLED=0 \
   go build -o chatgpt-for-chatbot-feishu
 
 # Server
-FROM  devops-registry.laiye.com:5000/build/golang:alpine
+FROM docker.friddle.me/whatwewant/go:v1.20-1
+
 # FROM whatwewant/zmicro:v1
 
 LABEL MAINTAINER="Zero<tobewhatwewant@gmail.com>"
