@@ -112,7 +112,7 @@ require (
 
 // replace github.com/go-zoox/openai-client => ../../go-zoox/openai-client
 
-// replace github.com/go-zoox/chatgpt-client => ../../go-zoox/chatgpt-client
+replace github.com/go-zoox/chatgpt-client => ../chatgpt-client
 
 // replace github.com/go-zoox/feishu => ../../go-zoox/feishu
 
