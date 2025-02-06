@@ -3,14 +3,14 @@ FROM   devops-registry.laiye.com:5000/build/golang:alpine  AS builder
 RUN apk add git
 WORKDIR /build
 
+RUN cd ..&&git clone git@github.com:friddle/chatgpt-client.git
 COPY go.mod ./
-
 COPY go.sum ./
+ENV GOPROXY https://goproxy.cn
 
 RUN go mod download
 
 COPY . .
-RUN cd ..&&git clone git@github.com:friddle/chatgpt-client.git
 
 RUN CGO_ENABLED=0 \
   GOOS=linux \
