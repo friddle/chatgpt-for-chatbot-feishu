@@ -1,5 +1,5 @@
 # Builder
-FROM --platform=$BUILDPLATFORM whatwewant/builder-go:v1.20-1 as builder
+FROM   devops-registry.laiye.com:5000/build/golang:alpine  AS builder
 
 WORKDIR /build
 
@@ -11,18 +11,13 @@ RUN go mod download
 
 COPY . .
 
-ARG TARGETARCH
 
 RUN CGO_ENABLED=0 \
   GOOS=linux \
-  GOARCH=$TARGETARCH \
-  go build \
-  -trimpath \
-  -ldflags '-w -s -buildid=' \
-  -v -o chatgpt-for-chatbot-feishu
+  go build -o chatgpt-for-chatbot-feishu
 
 # Server
-FROM whatwewant/go:v1.20-1
+FROM  devops-registry.laiye.com:5000/build/golang:alpine
 # FROM whatwewant/zmicro:v1
 
 LABEL MAINTAINER="Zero<tobewhatwewant@gmail.com>"
