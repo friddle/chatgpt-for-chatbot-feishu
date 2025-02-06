@@ -162,7 +162,7 @@ func CreateMessageCommand(
 						Temperature: 1.5,
 					})
 					if err != nil {
-						logger.Errorf("failed to request answer: %v", err)
+						logger.Errorf("failed to request answer: %v,temperature:%v", err, cfg.OpenAITemperature)
 						replyText(reply, fmt.Sprintf("服务异常：%s", err.Error()))
 						return fmt.Errorf("failed to request answer: %v", err)
 					}
