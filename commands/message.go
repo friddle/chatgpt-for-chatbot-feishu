@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"github.com/docker/cli/service/logs"
 	"time"
 
 	"github.com/go-zoox/core-utils/regexp"
@@ -153,11 +154,12 @@ func CreateMessageCommand(
 				}
 
 				var answer []byte
+				logs.ParseLogDetails(fmt.Sprintf("temperature:%s", cfg.OpenAITemperature))
 				err = retry.Retry(func() error {
 					answer, err = conversation.Ask([]byte(question), &chatgpt.ConversationAskConfig{
 						ID:          request.Event.Message.MessageID,
 						User:        user.User.Name,
-						Temperature: cfg.OpenAITemperature,
+						Temperature: 1.5,
 					})
 					if err != nil {
 						logger.Errorf("failed to request answer: %v", err)
