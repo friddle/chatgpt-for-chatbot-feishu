@@ -91,7 +91,7 @@ func CreateMessageCommand(
 									{
 										Tag:      "text",
 										UnEscape: true,
-										Text:     "思考中，请稍等...",
+										Text:     "嘴臭中，请稍等...",
 									},
 								},
 							},

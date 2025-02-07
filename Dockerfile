@@ -1,9 +1,10 @@
 # Builder
 FROM   devops-registry.laiye.com:5000/build/golang:alpine  AS builder
 RUN apk add git
+WORKDIR /
+RUN git@git.laiye.com:liaoyuandong/chatgpt-for-chatbot-feishu.git
 WORKDIR /build
 
-RUN cd ..&&git clone git@github.com:friddle/chatgpt-client.git
 COPY go.mod ./
 COPY go.sum ./
 ENV GOPROXY https://goproxy.cn
